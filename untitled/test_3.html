@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.min.js">
+    </script>
+</head>
+<body>
+    <div id="app">
+        今天是：
+        <span v-html="$options.filters.boxStyle($options.filters.dateFormat(today))"></span>
+
+    </div>
+    <script type="text/javascript">
+        var vue = new Vue({
+            el:'#app',
+            data:{
+                today:new Date(),
+            },
+            methods:{
+            },
+            filters:{
+                dateFormat:function(val){
+                    return val.getFullYear()+'-'+(val.getMonth() + 1)+'-'+ val.getDate();
+                },
+                boxStyle:function(val){
+                    return "<span style='display: inline-block;padding:6px 10px;background:pink'>"+val+"</span>"
+                }
+            }
+        });
+    </script>
+</body>
+</html>

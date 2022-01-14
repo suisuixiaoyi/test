@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.min.js">
+</script>
+<body>
+    <div id="app">
+        请输入商品价格：
+        <input type="number" v-model="price" /><br>
+        请输入商品折扣：
+        <select v-model="discount" style="width: 100px">
+            <option v-for="(item,index) in discounts" :value="item.value">{{item.label}}</option>
+        </select><br>
+        <span style="color: #F00">成交价：{{payment}}元</span>
+    </div>
+    <script type="text/javascript">
+        var vue = new Vue({
+            el:'#app',
+            data: {
+                price:0,
+                discount:0.9,
+                discounts:[{
+                    value:'0.9',
+                    label: '9折'
+                },{
+                   value:'0.8',
+                   label: '8折',
+                },{
+                    value:'0.7',
+                    label: '7折',
+                },{
+                    value:'0.65',
+                    label: '65折'
+                }]
+            },
+            methods: {
+
+            },
+            computed: {
+                payment:function(){
+                    var today = new Date();
+                    var month = today.getMonth() + 1;
+                    var day = today.getDate();
+
+                    var rebate = 0;
+                    if(month == 1 && day == 11){
+                        if(this.price >= 400){
+                            rebate = 150;
+                        }else if(this.price >= 200){
+                            rebate = 50;
+                        }
+                    }
+                    return this.price * this.discount - rebate;
+                }
+            }
+        })
+    </script>
+</body>
+</html>

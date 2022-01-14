@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        .progress {display: inline-block;background-color: red;width: 0;height: 18px;}
+        .primary {background: #409eff;}
+        .danger {background: #f56c6c;}
+        .success {background: #67c23a;}
+        .warning {background: #e6a23c;}
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.min.js">
+    </script>
+    <script type="text/javascript" src="coolBtn.js">
+    </script>
+</head>
+
+<body>
+    <div id="app">
+        <h2>{{msg}}({{progressNum}}% )</h2>
+        <span class="progress" :style="spanStyle"></span><br>
+        <cool-btn :type="'warning'" :name ="'增加进度'" @btn-click ="addProgress"></cool-btn>
+    </div>
+    <script type="text/javascript">
+        var vue = new Vue({
+            el:'#app',
+            data:{
+                msg:'加油，我看好你哦！',
+                progressNum:0,
+                spanStyle:{}
+            },
+            watch:{
+                progressNum:function(val){
+                    if(this.progressNum >= 100){
+                        this.progressNum = 100;
+                        this.msg = '大功告成，辛苦了！';
+                        return;
+                    }
+                    var background = 'red';
+                    if(this.progressNum >= 80){
+                        background = 'green';
+                        this.msg = '就差一点点了！';
+                    }else if(this.progressNum >= 50){
+                        background = 'orange';
+                        this.msg = '有改善咯！';
+                    }
+                    this.spanStyle = {
+                        width:this.progressNum + 'px',
+                        background:background
+                    }
+                }
+            },
+            methods: {
+                addProgress: function(){
+                    this.progressNum += 10;
+                }
+            }
+        });
+    </script>
+</body>
+</html>
